@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import GoogleMapReact from 'google-map-react';
 import { Paper, Typography, useMediaQuery } from '@material-ui/core';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
@@ -9,10 +9,10 @@ import useStyles from './style.js';
 
 
 
-const Map = ({ setCoords, setBounds , coords ,places}) => {
+const Map = ({ setCoords, setBounds , coords ,places ,setChildClicked}) => {
   const classes = useStyles();
   const isDesktop = useMediaQuery('(min-width:600px)');
-  
+
   return (
     <div className={classes.mapContainer}>
       <GoogleMapReact 
@@ -27,7 +27,7 @@ const Map = ({ setCoords, setBounds , coords ,places}) => {
           setCoords({ lat: e.center.lat, lng: e.center.lng });
           setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
         }}
-        onChildClick={''}
+        onChildClick={(child) => setChildClicked(child)}
       >
         {places?.map((place , i) => (
           <div 
@@ -41,7 +41,7 @@ const Map = ({ setCoords, setBounds , coords ,places}) => {
                 <LocationOnOutlinedIcon color="primary" fontSize="large"/>
               ):(
                 <Paper elevation={3} className={classes.paper}>
-                  <Typography className={classes.typography} varient="subtitle2" gutterBottom>
+                  <Typography className={classes.typography} variant="subtitle2" gutterBottom>
                     {place.name}
                   </Typography>
                   <img 
