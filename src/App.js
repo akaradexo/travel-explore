@@ -38,13 +38,17 @@ const App = () => {
       <Header/>
       <Grid container spacing={3} style={{width:'100%'}}>
         <Grid item xs={12} md={4}>
-          <List places={places}/>
+          <List 
+          places={places}
+          />
         </Grid>
         <Grid item xs={12} md={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <Map
             setCoords={setCoords}
             setBounds={setBounds}
             coords={coords}
+            places={places}
+
           />
         </Grid>
       </Grid>

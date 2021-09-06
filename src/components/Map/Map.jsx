@@ -9,9 +9,9 @@ import useStyles from './style.js';
 
 
 
-const Map = ({ setCoords, setBounds , coords }) => {
+const Map = ({ setCoords, setBounds , coords ,places}) => {
   const classes = useStyles();
-  const isMobile = useMediaQuery('(min-width:600px)');
+  const isDesktop = useMediaQuery('(min-width:600px)');
   
   return (
     <div className={classes.mapContainer}>
@@ -29,6 +29,32 @@ const Map = ({ setCoords, setBounds , coords }) => {
         }}
         onChildClick={''}
       >
+        {places?.map((place , i) => (
+          <div 
+          className={classes.markerContainer} 
+          lat={Number(place.latitude)} 
+          lng={Number(place.longitude)}
+          key={i}
+          >
+            {
+              !isDesktop ? (
+                <LocationOnOutlinedIcon color="primary" fontSize="large"/>
+              ):(
+                <Paper elevation={3} className={classes.paper}>
+                  <Typography className={classes.typography} varient="subtitle2" gutterBottom>
+                    {place.name}
+                  </Typography>
+                  <img 
+                  className={classes.pointer}
+                  src={place.photo ? place.photo.images.large.url : 'https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg'}
+                  alt={place.name}
+                  />
+                  <Rating size="small" value={Number(place.rating)} readOnly />
+                </Paper>
+              )
+            }
+          </div>
+        ))}
       </GoogleMapReact>
     </div>
   );
